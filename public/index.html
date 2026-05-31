@@ -375,12 +375,11 @@
                     }
                 }
             } else {
-                // Player not ready yet, will be loaded in onYouTubeIframeAPIReady
-                pendingLoad = { videoId, jumpTime };
+                // Create the player if it doesn't exist yet
+                createPlayer(videoId, jumpTime);
             }
         }
 
-        let pendingLoad = null;
         let ytApiReady = false;
 
         function onYouTubeIframeAPIReady() {
@@ -388,32 +387,13 @@
             if (jsonLoaded) initPlayer();
         }
 
-        function initPlayer() {
-            const params = parseUrlParams();
-            let videoId = null;
-            let jumpTime = null;
-
-            if (params && params.slug && registry[params.slug]) {
-                currentSlug = params.slug;
-                const entry = registry[params.slug];
-                videoId = extractVideoId(entry.url);
-                jumpTime = params.timeStr;
-                document.getElementById('nowPlaying').textContent = entry.name;
-                document.title = entry.name + ' - YouTube URL Params';
-                renderTimestamps(entry.timestamps, jumpTime);
-                renderVideoList();
-            } else if (params && params.slug) {
-                showStatus('Video "' + params.slug + '" not found. Pick one below.', '#ffd93d');
-                renderVideoList();
-                return;
-            } else {
-                renderVideoList();
-                return;
-            }
-
-            if (!videoId) return;
-
+        // Create (or recreate) the YT.Player in the container
+        function createPlayer(videoId, jumpTime) {
             const startSecs = jumpTime ? parseTimeToSeconds(jumpTime) : 0;
+
+            // Reset container so YT.Player has a fresh div
+            document.getElementById('youtubeContainer').innerHTML = '<div id="yt-player"></div>';
+            playerReady = false;
 
             player = new YT.Player('yt-player', {
                 height: '100%',
@@ -431,19 +411,31 @@
                         playerReady = true;
                         player = e.target;
                         startTimeUpdates();
-
-                        if (pendingLoad) {
-                            player.loadVideoById(pendingLoad.videoId);
-                            if (pendingLoad.jumpTime) {
-                                const s = parseTimeToSeconds(pendingLoad.jumpTime);
-                                if (s !== null) setTimeout(() => player.seekTo(s, true), 500);
-                            }
-                            pendingLoad = null;
-                        }
                     },
                     onStateChange: function() {}
                 }
             });
+        }
+
+        function initPlayer() {
+            const params = parseUrlParams();
+
+            if (params && params.slug && registry[params.slug]) {
+                currentSlug = params.slug;
+                const entry = registry[params.slug];
+                const videoId = extractVideoId(entry.url);
+                if (!videoId) return;
+                document.getElementById('nowPlaying').textContent = entry.name;
+                document.title = entry.name + ' - YouTube URL Params';
+                renderTimestamps(entry.timestamps, params.timeStr);
+                renderVideoList();
+                createPlayer(videoId, params.timeStr);
+            } else if (params && params.slug) {
+                showStatus('Video "' + params.slug + '" not found. Pick one below.', '#ffd93d');
+                renderVideoList();
+            } else {
+                renderVideoList();
+            }
         }
 
         function startTimeUpdates() {
