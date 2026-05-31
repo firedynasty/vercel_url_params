@@ -1,0 +1,408 @@
+{
+  "Basketball": {
+    "youtube": [
+      {
+        "name": "Dylan-Harper-Rim",
+        "url": "https://www.youtube.com/watch?v=WA-qLf40DJE"
+      },
+      {
+        "name": "dealing with pressure",
+        "url": "https://www.youtube.com/watch?v=HMZPUFhDkN4",
+        "times": [
+          {
+            "time": "2:49"
+          },
+          {
+            "time": "2:55",
+            "label": "backup then go forward with a cross"
+          },
+          {
+            "time": "3:55",
+            "label": "engage then release -- stay in control"
+          },
+          {
+            "time": "6:44",
+            "label": "wait for them to clear out"
+          },
+          {
+            "time": "6:54",
+            "label": "flash to get the ball to other player"
+          },
+          {
+            "time": "7:21",
+            "label": "give and go"
+          }
+        ]
+      },
+      {
+        "name": "dealing with pressure",
+        "times": [
+          {
+            "time": "2:49"
+          },
+          {
+            "time": "2:55",
+            "label": "backup then go forward with a cross"
+          },
+          {
+            "time": "3:55",
+            "label": "engage then release -- stay in control"
+          },
+          {
+            "time": "6:44",
+            "label": "wait for them to clear out"
+          },
+          {
+            "time": "6:54",
+            "label": "flash to get the ball to other player"
+          },
+          {
+            "time": "7:21",
+            "label": "give and go"
+          }
+        ],
+        "type": "text"
+      },
+      {
+        "name": "stepback",
+        "url": "https://www.youtube.com/shorts/AvAH3N6RXxw"
+      },
+      {
+        "name": "curry-3",
+        "url": "https://www.youtube.com/watch?v=G_5n8myDG2o"
+      },
+      {
+        "name": "white-side-three",
+        "url": "https://www.youtube.com/watch?v=-DJ84qhxtBc"
+      },
+      {
+        "name": "highlight",
+        "url": "https://www.youtube.com/shorts/tHhqSvtLAmQ"
+      },
+      {
+        "name": "fade-away",
+        "url": "https://www.youtube.com/watch?v=77tAMve11vk"
+      },
+      {
+        "name": "fade-away-short",
+        "url": "https://www.youtube.com/shorts/qagyfGfPgPA"
+      },
+      {
+        "name": "dirk-fade",
+        "url": "https://www.youtube.com/shorts/BVGmjMcghGI"
+      },
+      {
+        "name": "drive-to-spin",
+        "url": "https://www.youtube.com/shorts/XtXiJKHgeUs"
+      },
+      {
+        "name": "foot-work",
+        "url": "https://www.youtube.com/shorts/RiW8eOy7P08"
+      },
+      {
+        "name": "shimmy-fade",
+        "url": "https://www.youtube.com/shorts/6VAJI1nF6kw"
+      },
+      {
+        "name": "hesi-change-velocity",
+        "url": "https://www.youtube.com/shorts/ZM-ek6FNuPk"
+      },
+      {
+        "name": "velocity",
+        "url": "https://www.youtube.com/shorts/dmRNjpnKNQw"
+      },
+      {
+        "name": "fast-slow-drills",
+        "url": "https://www.youtube.com/shorts/XboEEjBwCMY"
+      },
+      {
+        "name": "slow-down-here-quick",
+        "url": "https://www.youtube.com/shorts/B-L_PHMXm8Y"
+      },
+      {
+        "name": "change-pace-go-see-the-shorts-at-youtube",
+        "url": "https://www.youtube.com/watch?v=Jkk-eDqYbWw"
+      },
+      {
+        "name": "shooting-coach-Mike",
+        "url": "https://www.youtube.com/watch?v=EoQu1XJfEb8"
+      },
+      {
+        "name": "getting-shifty",
+        "url": "https://www.youtube.com/watch?v=FZImMPkDK3Q",
+        "times": [
+          {
+            "time": "0:07"
+          },
+          {
+            "time": "0:18"
+          },
+          {
+            "time": "0:21"
+          },
+          {
+            "time": "0:36"
+          },
+          {
+            "time": "0:57"
+          },
+          {
+            "time": "1:01"
+          },
+          {
+            "time": "1:05"
+          },
+          {
+            "time": "1:11"
+          },
+          {
+            "time": "1:13",
+            "label": "turn_around_back_and_forth"
+          },
+          {
+            "time": "1:15",
+            "label": "forward_to_backwards"
+          },
+          {
+            "time": "1:22",
+            "label": "snatch"
+          },
+          {
+            "time": "1:30",
+            "label": "cross_overs"
+          },
+          {
+            "time": "1:37",
+            "label": "hesi_to_shot"
+          },
+          {
+            "time": "2:09",
+            "label": "drive-step-back"
+          },
+          {
+            "time": "3:02",
+            "label": "snatch"
+          },
+          {
+            "time": "3:15",
+            "label": "drop-to-pull-back"
+          },
+          {
+            "time": "5:01",
+            "label": "counter"
+          },
+          {
+            "time": "5:08",
+            "label": "dribble to behind the back counter"
+          },
+          {
+            "time": "5:12",
+            "label": "reach and I will teach"
+          },
+          {
+            "time": "5:14",
+            "label": "got eh counter straight wing"
+          },
+          {
+            "time": "5:16",
+            "label": "Paul spin -- left hand in then spin -- shoulder to the left then back"
+          },
+          {
+            "time": "5:22",
+            "label": "perfect-snatch"
+          }
+        ]
+      },
+      {
+        "name": "getting-shifty",
+        "times": [
+          {
+            "time": "0:07"
+          },
+          {
+            "time": "0:18"
+          },
+          {
+            "time": "0:21"
+          },
+          {
+            "time": "0:36"
+          },
+          {
+            "time": "0:57"
+          },
+          {
+            "time": "1:01"
+          },
+          {
+            "time": "1:05"
+          },
+          {
+            "time": "1:11"
+          },
+          {
+            "time": "1:13",
+            "label": "turn_around_back_and_forth"
+          },
+          {
+            "time": "1:15",
+            "label": "forward_to_backwards"
+          },
+          {
+            "time": "1:22",
+            "label": "snatch"
+          },
+          {
+            "time": "1:30",
+            "label": "cross_overs"
+          },
+          {
+            "time": "1:37",
+            "label": "hesi_to_shot"
+          },
+          {
+            "time": "2:09",
+            "label": "drive-step-back"
+          },
+          {
+            "time": "3:02",
+            "label": "snatch"
+          },
+          {
+            "time": "3:15",
+            "label": "drop-to-pull-back"
+          },
+          {
+            "time": "5:01",
+            "label": "counter"
+          },
+          {
+            "time": "5:08",
+            "label": "dribble to behind the back counter"
+          },
+          {
+            "time": "5:12",
+            "label": "reach and I will teach"
+          },
+          {
+            "time": "5:14",
+            "label": "got eh counter straight wing"
+          },
+          {
+            "time": "5:16",
+            "label": "Paul spin -- left hand in then spin -- shoulder to the left then back"
+          },
+          {
+            "time": "5:22",
+            "label": "perfect-snatch"
+          }
+        ],
+        "type": "text"
+      },
+      {
+        "name": "pick-the-play",
+        "url": "https://www.youtube.com/watch?v=j16FCb3BbDs&t=155s"
+      },
+      {
+        "name": "against-pyhysical-defender",
+        "url": "https://www.youtube.com/watch?v=QJdHoI7VO9E"
+      },
+      {
+        "name": "nba-how-to",
+        "url": "https://www.youtube.com/watch?v=e7sWXixI77M&t=97s"
+      },
+      {
+        "name": "manipulate-the-ball",
+        "url": "https://www.youtube.com/shorts/oo594Kzt41A"
+      },
+      {
+        "name": "dribbline-drills",
+        "url": "https://www.youtube.com/watch?v=loraMUWKteA"
+      },
+      {
+        "name": "highlight-shot-floater",
+        "url": "https://www.youtube.com/watch?v=13NB4zcVTA8?",
+        "times": [
+          {
+            "time": "4:18",
+            "label": "floater"
+          },
+          {
+            "time": "4:31",
+            "label": "three point shot"
+          }
+        ]
+      },
+      {
+        "name": "highlight-shot-floater",
+        "times": [
+          {
+            "time": "4:18",
+            "label": "floater"
+          },
+          {
+            "time": "4:31",
+            "label": "three point shot"
+          }
+        ],
+        "type": "text"
+      },
+      {
+        "name": "passing",
+        "url": "https://www.youtube.com/watch?v=-WRHRhWdsko"
+      },
+      {
+        "name": "change-direction",
+        "url": "https://www.youtube.com/watch?v=Coim-2LzADI"
+      },
+      {
+        "name": "basic-dribbling",
+        "url": "https://www.youtube.com/watch?v=vR0e6jztDIg"
+      },
+      {
+        "name": "pound-dribble-then-quick",
+        "url": "https://www.youtube.com/watch?v=NNaj3GGLM0Q"
+      },
+      {
+        "name": "pushoff-toshot",
+        "url": "https://www.youtube.com/shorts/R5VA2APUY6o"
+      },
+      {
+        "name": "spins eal",
+        "url": "https://www.youtube.com/shorts/IevpBe7PZnQ"
+      },
+      {
+        "name": "wide-base",
+        "url": "https://www.youtube.com/shorts/32tT-NjdmLM"
+      },
+      {
+        "name": "beating-defense",
+        "url": "https://www.youtube.com/shorts/38fnNC0PFlY"
+      },
+      {
+        "name": "defense",
+        "url": "https://www.youtube.com/shorts/6yXSKocO82Y"
+      },
+      {
+        "name": "wall-up-d",
+        "url": "https://www.youtube.com/shorts/IPyNQ7z_CLM"
+      },
+      {
+        "name": "two-feet-finish",
+        "url": "https://www.youtube.com/watch?v=Z89PxzOBXFs"
+      },
+      {
+        "name": "hookshot3",
+        "url": "https://www.youtube.com/watch?v=-tmuaKwZ1As&t=128s"
+      },
+      {
+        "name": "hookshot2",
+        "url": "https://www.youtube.com/watch?v=uh_Qd2awC9Y"
+      },
+      {
+        "name": "hookshot1",
+        "url": "https://www.youtube.com/watch?v=MR9EAgltKx0"
+      }
+    ]
+  }
+}
