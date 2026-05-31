@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube URL Params</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            color: #ff6b6b;
+        }
+        .now-playing {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            color: #ffd93d;
+            min-height: 1.5em;
+        }
+        .youtube-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #000;
+            margin-bottom: 20px;
+        }
+        .youtube-container iframe,
+        .youtube-container #yt-player {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: none;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .current-time {
+            font-size: 1.3rem;
+            font-family: monospace;
+            color: #4ecdc4;
+            background: #16213e;
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
+        .speed-btn {
+            padding: 8px 16px;
+            background: #e94560;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        .speed-btn:hover { opacity: 0.85; }
+
+        .timestamps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+        .timestamp-btn {
+            padding: 8px 16px;
+            background: #16213e;
+            color: #4ecdc4;
+            border: 2px solid #4ecdc4;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-family: monospace;
+            transition: all 0.2s;
+        }
+        .timestamp-btn:hover {
+            background: #4ecdc4;
+            color: #1a1a2e;
+        }
+        .timestamp-btn.active {
+            background: #4ecdc4;
+            color: #1a1a2e;
+        }
+
+        .video-list {
+            background: #16213e;
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .video-list h2 {
+            color: #ff6b6b;
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+        }
+        .category {
+            margin-bottom: 15px;
+        }
+        .category-title {
+            color: #ffd93d;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .video-link {
+            display: inline-block;
+            padding: 6px 14px;
+            margin: 3px 4px;
+            background: #1a1a2e;
+            color: #4ecdc4;
+            border: 1px solid #4ecdc433;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .video-link:hover {
+            background: #4ecdc4;
+            color: #1a1a2e;
+            border-color: #4ecdc4;
+        }
+        .video-link.active {
+            background: #ff6b6b;
+            color: white;
+            border-color: #ff6b6b;
+        }
+        .add-section {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #4ecdc433;
+        }
+        .add-section textarea {
+            width: 100%;
+            min-height: 80px;
+            background: #1a1a2e;
+            color: #e0e0e0;
+            border: 1px solid #4ecdc433;
+            border-radius: 8px;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            resize: vertical;
+            margin-bottom: 8px;
+        }
+        .add-section textarea::placeholder { color: #666; }
+        .add-btn {
+            padding: 8px 20px;
+            background: #4ecdc4;
+            color: #1a1a2e;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        .add-btn:hover { opacity: 0.85; }
+        .status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            z-index: 1000;
+            display: none;
+        }
+        .search-box {
+            width: 100%;
+            padding: 10px 14px;
+            background: #1a1a2e;
+            color: #e0e0e0;
+            border: 1px solid #4ecdc433;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+        }
+        .search-box::placeholder { color: #666; }
+        .search-box:focus { outline: none; border-color: #4ecdc4; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>YouTube URL Params</h1>
+        <div class="now-playing" id="nowPlaying"></div>
+
+        <div class="youtube-container" id="youtubeContainer">
+            <div id="yt-player"></div>
+        </div>
+
+        <div class="controls">
+            <span class="current-time" id="currentTime">0:00</span>
+            <button class="speed-btn" id="speedBtn" onclick="toggleSpeed()">1x</button>
+        </div>
+
+        <div class="timestamps" id="timestamps"></div>
+
+        <div class="video-list">
+            <h2>Videos</h2>
+            <input type="text" class="search-box" id="searchBox" placeholder="Search videos..." oninput="renderVideoList()">
+            <div id="videoListContainer"></div>
+
+            <div class="add-section">
+                <textarea id="addInput" placeholder="Add videos (one per line):&#10;name,https://www.youtube.com/watch?v=...&#10;name,https://www.youtube.com/watch?v=...,1:00,2:30&#10;&#10;Or with category:&#10;[Basketball]&#10;name,url&#10;name,url,timestamp"></textarea>
+                <button class="add-btn" onclick="addVideos()">Add Videos</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="status" id="status"></div>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        // ===== VIDEO REGISTRY =====
+        // Format: { slug: { name, url, timestamps: ['1:00','2:30'], category } }
+        // Stored in localStorage, seeded with defaults
+
+        const STORAGE_KEY = 'yt_url_params_registry';
+
+        const DEFAULT_VIDEOS = {
+            'Dylan-Harper-Rim': {
+                name: 'How Dylan Harper Gets to the Rim EVERY Time',
+                url: 'https://www.youtube.com/watch?v=WA-qLf40DJE',
+                timestamps: [],
+                category: 'Basketball'
+            }
+        };
+
+        let registry = loadRegistry();
+        let player = null;
+        let playerReady = false;
+        let currentSlug = null;
+        let timeUpdateInterval = null;
+
+        function loadRegistry() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    return JSON.parse(stored);
+                } catch (e) {}
+            }
+            return { ...DEFAULT_VIDEOS };
+        }
+
+        function saveRegistry() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(registry));
+        }
+
+        // ===== SLUG HELPERS =====
+        function makeSlug(name) {
+            return name.replace(/[^a-zA-Z0-9]+/g, '-').replace(/^-|-$/g, '');
+        }
+
+        // ===== URL PARAM PARSING =====
+        // Format: ?Slug-Name or ?Slug-Name?1:00 or ?Slug-Name?1:00,2:30
+        function parseUrlParams() {
+            const raw = decodeURIComponent(window.location.search.substring(1));
+            if (!raw) return null;
+
+            // Split on ? to separate slug from timestamp
+            // e.g. "Dylan-Harper-Rim?1:00" → ["Dylan-Harper-Rim", "1:00"]
+            const parts = raw.split('?');
+            const slug = parts[0];
+            const timeStr = parts.slice(1).join('?'); // rejoin in case timestamp has ?
+
+            return { slug, timeStr: timeStr || null };
+        }
+
+        // ===== YOUTUBE HELPERS =====
+        function extractVideoId(url) {
+            const match = url.match(/^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|shorts\/)([^#&?]*).*/);
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
+
+        function parseTimeToSeconds(timeStr) {
+            timeStr = timeStr.trim();
+            if (/^\d+$/.test(timeStr)) return parseInt(timeStr);
+
+            const hms = timeStr.match(/^(\d+):(\d+):(\d+)$/);
+            if (hms) return parseInt(hms[1]) * 3600 + parseInt(hms[2]) * 60 + parseInt(hms[3]);
+
+            const ms = timeStr.match(/^(\d+):(\d+)$/);
+            if (ms && parseInt(ms[2]) < 60) return parseInt(ms[1]) * 60 + parseInt(ms[2]);
+
+            return null;
+        }
+
+        function formatTime(totalSeconds) {
+            const m = Math.floor(totalSeconds / 60);
+            const s = Math.floor(totalSeconds % 60);
+            return m + ':' + String(s).padStart(2, '0');
+        }
+
+        // ===== PLAYER =====
+        function loadVideo(slug, jumpTime) {
+            const entry = registry[slug];
+            if (!entry) {
+                showStatus('Video not found: ' + slug, '#e94560');
+                return;
+            }
+
+            currentSlug = slug;
+            document.getElementById('nowPlaying').textContent = entry.name;
+            document.title = entry.name + ' - YouTube URL Params';
+
+            // Update URL without reload
+            const newUrl = '?' + slug + (jumpTime ? '?' + jumpTime : '');
+            history.replaceState(null, '', newUrl);
+
+            const videoId = extractVideoId(entry.url);
+            if (!videoId) {
+                showStatus('Invalid YouTube URL', '#e94560');
+                return;
+            }
+
+            // Render timestamps
+            renderTimestamps(entry.timestamps, jumpTime);
+
+            // Highlight active video in list
+            renderVideoList();
+
+            if (player && playerReady) {
+                player.loadVideoById(videoId);
+                if (jumpTime) {
+                    const secs = parseTimeToSeconds(jumpTime);
+                    if (secs !== null) {
+                        setTimeout(() => player.seekTo(secs, true), 500);
+                    }
+                }
+            } else {
+                // Player not ready yet, will be loaded in onYouTubeIframeAPIReady
+                pendingLoad = { videoId, jumpTime };
+            }
+        }
+
+        let pendingLoad = null;
+
+        function onYouTubeIframeAPIReady() {
+            const params = parseUrlParams();
+            let videoId = null;
+            let jumpTime = null;
+
+            if (params && params.slug && registry[params.slug]) {
+                currentSlug = params.slug;
+                const entry = registry[params.slug];
+                videoId = extractVideoId(entry.url);
+                jumpTime = params.timeStr;
+                document.getElementById('nowPlaying').textContent = entry.name;
+                document.title = entry.name + ' - YouTube URL Params';
+                renderTimestamps(entry.timestamps, jumpTime);
+                renderVideoList();
+            } else if (params && params.slug) {
+                // Slug not found - show list
+                showStatus('Video "' + params.slug + '" not found. Pick one below.', '#ffd93d');
+                renderVideoList();
+                return;
+            } else {
+                // No URL param - just show the list
+                renderVideoList();
+                return;
+            }
+
+            if (!videoId) return;
+
+            const startSecs = jumpTime ? parseTimeToSeconds(jumpTime) : 0;
+
+            player = new YT.Player('yt-player', {
+                height: '100%',
+                width: '100%',
+                videoId: videoId,
+                playerVars: {
+                    enablejsapi: 1,
+                    rel: 0,
+                    modestbranding: 1,
+                    iv_load_policy: 3,
+                    start: startSecs || 0
+                },
+                events: {
+                    onReady: function(e) {
+                        playerReady = true;
+                        player = e.target;
+                        startTimeUpdates();
+
+                        if (pendingLoad) {
+                            player.loadVideoById(pendingLoad.videoId);
+                            if (pendingLoad.jumpTime) {
+                                const s = parseTimeToSeconds(pendingLoad.jumpTime);
+                                if (s !== null) setTimeout(() => player.seekTo(s, true), 500);
+                            }
+                            pendingLoad = null;
+                        }
+                    },
+                    onStateChange: function() {}
+                }
+            });
+        }
+
+        function startTimeUpdates() {
+            if (timeUpdateInterval) clearInterval(timeUpdateInterval);
+            timeUpdateInterval = setInterval(() => {
+                if (player && playerReady && typeof player.getCurrentTime === 'function') {
+                    document.getElementById('currentTime').textContent = formatTime(player.getCurrentTime());
+                }
+            }, 250);
+        }
+
+        function toggleSpeed() {
+            if (!player || !playerReady) return;
+            const btn = document.getElementById('speedBtn');
+            const rates = [1, 1.25, 1.5, 2];
+            const current = player.getPlaybackRate();
+            const next = rates[(rates.indexOf(current) + 1) % rates.length];
+            player.setPlaybackRate(next);
+            btn.textContent = next + 'x';
+        }
+
+        // ===== TIMESTAMPS =====
+        function renderTimestamps(timestamps, activeTime) {
+            const container = document.getElementById('timestamps');
+            container.innerHTML = '';
+            if (!timestamps || timestamps.length === 0) return;
+
+            timestamps.forEach(t => {
+                const btn = document.createElement('button');
+                btn.className = 'timestamp-btn' + (t === activeTime ? ' active' : '');
+                btn.textContent = t;
+                btn.onclick = () => {
+                    const secs = parseTimeToSeconds(t);
+                    if (secs !== null && player && playerReady) {
+                        player.seekTo(secs, true);
+                        // Update active state
+                        container.querySelectorAll('.timestamp-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        // Update URL
+                        history.replaceState(null, '', '?' + currentSlug + '?' + t);
+                    }
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        // ===== VIDEO LIST =====
+        function renderVideoList() {
+            const container = document.getElementById('videoListContainer');
+            const search = document.getElementById('searchBox').value.toLowerCase();
+            container.innerHTML = '';
+
+            // Group by category
+            const categories = {};
+            for (const [slug, entry] of Object.entries(registry)) {
+                const cat = entry.category || 'Uncategorized';
+                if (search && !entry.name.toLowerCase().includes(search) && !slug.toLowerCase().includes(search) && !cat.toLowerCase().includes(search)) continue;
+                if (!categories[cat]) categories[cat] = [];
+                categories[cat].push({ slug, ...entry });
+            }
+
+            if (Object.keys(categories).length === 0) {
+                container.innerHTML = '<p style="color:#666; padding:10px;">No videos found.</p>';
+                return;
+            }
+
+            for (const [cat, videos] of Object.entries(categories)) {
+                const div = document.createElement('div');
+                div.className = 'category';
+
+                const title = document.createElement('div');
+                title.className = 'category-title';
+                title.textContent = cat;
+                div.appendChild(title);
+
+                videos.forEach(v => {
+                    const link = document.createElement('span');
+                    link.className = 'video-link' + (v.slug === currentSlug ? ' active' : '');
+                    link.textContent = v.name;
+                    link.title = v.url + (v.timestamps.length ? ' | ' + v.timestamps.join(', ') : '');
+                    link.onclick = () => loadVideo(v.slug);
+                    div.appendChild(link);
+                });
+
+                container.appendChild(div);
+            }
+        }
+
+        // ===== ADD VIDEOS =====
+        function addVideos() {
+            const input = document.getElementById('addInput').value.trim();
+            if (!input) return;
+
+            let currentCategory = 'Uncategorized';
+            let count = 0;
+
+            input.split('\n').forEach(line => {
+                line = line.trim();
+                if (!line) return;
+
+                // Category header: [Basketball]
+                const catMatch = line.match(/^\[(.+)\]$/);
+                if (catMatch) {
+                    currentCategory = catMatch[1];
+                    return;
+                }
+
+                // Parse: name,url or name,url,1:00,2:30
+                const parts = [];
+                let cur = '', inQuote = false;
+                for (let i = 0; i < line.length; i++) {
+                    const ch = line[i];
+                    if (ch === '"') inQuote = !inQuote;
+                    else if (ch === ',' && !inQuote) { parts.push(cur.trim()); cur = ''; }
+                    else cur += ch;
+                }
+                parts.push(cur.trim());
+
+                if (parts.length < 2) return;
+
+                // Detect which is name vs URL
+                const firstIsUrl = parts[0].startsWith('http');
+                const name = firstIsUrl ? parts[1] : parts[0];
+                const url = firstIsUrl ? parts[0] : parts[1];
+
+                if (!url || !url.startsWith('http')) return;
+
+                // Remaining parts are timestamps
+                const timestamps = parts.slice(2).filter(t => parseTimeToSeconds(t) !== null);
+
+                const slug = makeSlug(name);
+                registry[slug] = { name, url, timestamps, category: currentCategory };
+                count++;
+            });
+
+            if (count > 0) {
+                saveRegistry();
+                renderVideoList();
+                document.getElementById('addInput').value = '';
+                showStatus('Added ' + count + ' video(s)', '#4ecdc4');
+            }
+        }
+
+        // ===== STATUS =====
+        function showStatus(msg, color) {
+            const el = document.getElementById('status');
+            el.textContent = msg;
+            el.style.background = color;
+            el.style.color = color === '#ffd93d' ? '#1a1a2e' : 'white';
+            el.style.display = 'block';
+            setTimeout(() => el.style.display = 'none', 3000);
+        }
+
+        // ===== INIT =====
+        renderVideoList();
+    </script>
+</body>
+</html>
