@@ -608,8 +608,15 @@
         }
 
         // ===== INIT =====
-        // Fetch playlists.json, merge with localStorage additions, then init
-        fetch('playlists.json')
+        // Fetch from API (Dropbox env var) first, fall back to static playlists.json
+        async function fetchPlaylists() {
+            let res;
+            try { res = await fetch('/api/playlists'); } catch (_) {}
+            if (!res || !res.ok) res = await fetch('playlists.json');
+            return res;
+        }
+
+        fetchPlaylists()
             .then(r => r.json())
             .then(data => {
                 registry = buildRegistryFromJSON(data);
