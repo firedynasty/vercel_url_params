@@ -145,6 +145,9 @@
             color: white;
             border-color: #ff6b6b;
         }
+        .video-link.has-timestamps {
+            border: 2px solid #ffd93d;
+        }
         .add-section {
             margin-top: 20px;
             padding-top: 15px;
@@ -515,7 +518,8 @@
 
                 videos.forEach(v => {
                     const link = document.createElement('span');
-                    link.className = 'video-link' + (v.slug === currentSlug ? ' active' : '');
+                    const hasTimes = v.timestamps && v.timestamps.length > 0;
+                    link.className = 'video-link' + (v.slug === currentSlug ? ' active' : '') + (hasTimes ? ' has-timestamps' : '');
                     link.textContent = v.name;
                     const tsStr = (v.timestamps || []).map(t => typeof t === 'object' ? t.time : t).join(', ');
                     link.title = v.url + (tsStr ? ' | ' + tsStr : '');
