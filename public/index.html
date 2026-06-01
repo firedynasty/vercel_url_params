@@ -213,6 +213,7 @@
         <div class="controls">
             <span class="current-time" id="currentTime">0:00</span>
             <button class="speed-btn" id="speedBtn" onclick="toggleSpeed()">1x</button>
+            <input id="addTimeInput" type="text" placeholder="0:07" style="width:60px;padding:4px 8px;border:1px solid #555;border-radius:12px;background:#222;color:#fff;font-size:12px;text-align:center;">
         </div>
 
         <div class="timestamps" id="timestamps"></div>
@@ -453,7 +454,7 @@
         function toggleSpeed() {
             if (!player || !playerReady) return;
             const btn = document.getElementById('speedBtn');
-            const rates = [1, 1.25, 1.5, 2];
+            const rates = [1, 0.5];
             const current = player.getPlaybackRate();
             const next = rates[(rates.indexOf(current) + 1) % rates.length];
             player.setPlaybackRate(next);
@@ -486,6 +487,24 @@
                 container.appendChild(btn);
             });
         }
+
+        // ===== ADD TIMESTAMP INPUT =====
+        document.getElementById('addTimeInput').addEventListener('input', function() {
+            const val = this.value.trim();
+            if (/^\d{1,2}:\d{2}(:\d{2})?$/.test(val)) {
+                const secs = parseTimeToSeconds(val);
+                if (secs !== null && currentSlug && registry[currentSlug]) {
+                    registry[currentSlug].timestamps.push(val);
+                    renderTimestamps(registry[currentSlug].timestamps, val);
+                    // Seek to the new timestamp
+                    if (player && playerReady) {
+                        player.seekTo(secs, true);
+                        history.replaceState(null, '', '?' + currentSlug + '?' + val);
+                    }
+                    this.value = '';
+                }
+            }
+        });
 
         // ===== VIDEO LIST =====
         function renderVideoList() {
