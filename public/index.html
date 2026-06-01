@@ -211,6 +211,7 @@
         </div>
 
         <div class="controls">
+            <button class="speed-btn" onclick="seekRelative(-5)">-5s</button>
             <span class="current-time" id="currentTime">0:00</span>
             <button class="speed-btn" id="speedBtn" onclick="toggleSpeed()">1x</button>
             <input id="addTimeInput" type="text" placeholder="0:07" style="width:60px;padding:4px 8px;border:1px solid #555;border-radius:12px;background:#222;color:#fff;font-size:12px;text-align:center;">
@@ -449,6 +450,12 @@
                     document.getElementById('currentTime').textContent = formatTime(player.getCurrentTime());
                 }
             }, 250);
+        }
+
+        function seekRelative(offset) {
+            if (!player || !playerReady) return;
+            const current = player.getCurrentTime();
+            player.seekTo(Math.max(0, current + offset), true);
         }
 
         function toggleSpeed() {
